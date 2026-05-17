@@ -264,7 +264,7 @@ def should_use_tools(state: dict) -> str:
 
 def build_research_graph() -> StateGraph:
     """Build the research agent workflow graph."""
-    workflow = StateGraph(dict)
+    workflow = StateGraph(AgentState)
 
     # Add nodes
     workflow.add_node("research", research_node)

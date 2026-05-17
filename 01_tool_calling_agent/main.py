@@ -136,7 +136,7 @@ TOOLS = [
 # 4. The agent loop: send message -> handle tool calls -> repeat
 # ---------------------------------------------------------------------------
 
-def run_agent(user_message: str) -> str:
+def run_agent(user_message: str, max_iterations: int = 10) -> str:
     """Run the tool-calling agent for a single user message."""
     client = OpenAI()
     messages = [
@@ -155,7 +155,7 @@ def run_agent(user_message: str) -> str:
     print(f"User: {user_message}")
     print(f"{'='*60}")
 
-    while True:
+    for _ in range(max_iterations):
         response = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=messages,
@@ -197,6 +197,8 @@ def run_agent(user_message: str) -> str:
             final_response = choice.message.content
             print(f"\nAssistant: {final_response}")
             return final_response
+
+    return "Agent reached maximum iterations without a final answer."
 
 
 # ---------------------------------------------------------------------------
